@@ -3,7 +3,6 @@ import Router from 'vue-router'
 
 Vue.use(Router)
 
-console.log(2)
 export default new Router({
   mode: 'hash',
   base: process.env.BASE_URL,

@@ -9,6 +9,10 @@
       link="components/forms"
     />
 
+    <form-base
+      :schema="schema"
+      :scope="'form'"
+    />
     <v-row>
       <v-col
         cols="12"
@@ -437,8 +441,12 @@
 </template>
 
 <script>
+  import FormBase from '@/components/base/Form/FormBase'
   export default {
     name: 'DashboardFormsRegularForms',
+    components: {
+      FormBase,
+    },
 
     data: () => ({
       checkbox: true,
@@ -446,6 +454,52 @@
       radioGroup: 1,
       switch1: true,
       zoom: 0,
+      schema: [
+        {
+          component: 'text',
+          type: 'text',
+          label: 'Name',
+          value: '1',
+        },
+        {
+          component: 'textarea',
+          type: 'text',
+          label: 'Name',
+          value: '1',
+        },
+        {
+          component: 'checkbox',
+          label: 'Names',
+          options: [
+            {
+              id: '1',
+              label: '23',
+            },
+            {
+              id: '2',
+              label: '2223',
+            },
+            {
+              id: '3',
+              label: '1111',
+            },
+          ],
+        },
+        {
+          component: 'radio',
+          label: 'Names',
+          options: [
+            {
+              id: '1',
+              label: '23',
+            },
+            {
+              id: '2',
+              label: '2223',
+            },
+          ],
+        },
+      ],
     }),
 
     methods: {
