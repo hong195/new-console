@@ -8,11 +8,19 @@
       heading="Forms"
       link="components/forms"
     />
-
-    <form-base
-      :schema="schema"
-      :scope="'form'"
-    />
+    <base-material-card
+      color="success"
+      icon="mdi-email"
+      title="Stacked Form"
+      class="px-5 py-3 mb-10"
+    >
+      <form-base
+        v-model="val"
+        :schema="schema"
+        :scope="'test-form'"
+        :on-submit="submit"
+      />
+    </base-material-card>
     <v-row>
       <v-col
         cols="12"
@@ -441,63 +449,146 @@
 </template>
 
 <script>
-  import FormBase from '@/components/base/Form/FormBase'
+  import FormBase from '@/components/Form/FormBase'
+
   export default {
     name: 'DashboardFormsRegularForms',
     components: {
       FormBase,
     },
-
     data: () => ({
       checkbox: true,
       items: ['Foo', 'Bar', 'Fizz', 'Buzz'],
       radioGroup: 1,
       switch1: true,
       zoom: 0,
+      val: '',
+      files: 'null',
       schema: [
         {
           component: 'text',
+          name: 'name',
           type: 'text',
-          label: 'Name',
-          value: '1',
+          rule: 'required',
+          label: 'Name1',
+          value: '22222',
+          attributes: {
+            dense: true,
+            class: '12312312312312',
+            'open-on-clear': true,
+          },
         },
         {
           component: 'textarea',
+          name: 'name2',
           type: 'text',
           label: 'Name',
+          rule: 'required',
           value: '1',
         },
         {
           component: 'checkbox',
-          label: 'Names',
+          label: '1111sdfsdf',
+          rule: 'required',
+          name: 'name3',
+          cols: 6,
+          value: '1',
           options: [
             {
               id: '1',
-              label: '23',
+              name: '23',
             },
             {
               id: '2',
-              label: '2223',
+              name: '2223',
             },
             {
-              id: '3',
-              label: '1111',
+              id: '32',
+              name: '1111',
+            },
+            {
+              id: '33',
+              name: '1111',
+            },
+            {
+              id: '34',
+              name: '1111',
+            },
+            {
+              id: '35',
+              name: '1111',
             },
           ],
         },
         {
           component: 'radio',
-          label: 'Names',
+          label: 'Names22332',
+          name: 'name4',
+          rule: 'required',
+          value: 1,
+          cols: 6,
           options: [
             {
               id: '1',
-              label: '23',
+              name: '23',
             },
             {
               id: '2',
-              label: '2223',
+              name: '2223',
             },
           ],
+        },
+        {
+          component: 'treeselect',
+          label: '12awad',
+          name: 'name1111',
+          rule: 'required',
+          value: '1',
+          attributes: {
+            options: [],
+            placeholder: '1221212',
+          },
+          options: [
+            {
+              id: '1',
+              name: '23',
+            },
+            {
+              id: '2',
+              name: '2223',
+            },
+          ],
+        },
+        {
+          component: 'select',
+          label: 'Names22111111332',
+          attributes: {
+            outlined: true,
+            class: '12312312312312',
+            'open-on-clear': true,
+          },
+          name: 'name24',
+          rule: 'required',
+          value: '1',
+          options: [
+            {
+              id: '1',
+              name: '23',
+            },
+            {
+              id: '2',
+              name: '2223',
+            },
+          ],
+        },
+        {
+          component: 'file',
+          name: 'attachment',
+          rule: 'required',
+          label: 'Names111  1111',
+          attributes: {
+            theme: 'list',
+          },
         },
       ],
     }),
@@ -508,6 +599,13 @@
       },
       zoomIn () {
         this.zoom = (this.zoom + 10) || 100
+      },
+      submit ({ resolve }) {
+        this.axios.post('http://media-manager.loc/test', this.val)
+        resolve()
+      },
+      test ($event) {
+        console.log(this.files)
       },
     },
   }
