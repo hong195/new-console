@@ -43,6 +43,16 @@ export default new Router({
           path: '',
           component: () => import('@/views/dashboard/Dashboard'),
         },
+        {
+          name: 'pharmacy',
+          path: 'pharmacy',
+          component: () => import('@/views/dashboard/pages/Pharmacy'),
+        },
+        {
+          name: 'addMember',
+          path: 'add-member',
+          component: () => import('@/views/dashboard/pages/AddMember'),
+        },
         // Pages
         {
           name: 'RTL',

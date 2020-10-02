@@ -63,6 +63,7 @@
   import TextareaField from './Fields/TextareaField'
   import TreeselectField from './Fields/TreeselectField'
   import FileField from './Fields/FileField'
+  import BirthdayField from './Fields/BirthdayField'
   import FormActionMixin from '@/components/Form/Mixins/FormActionsMixin'
 
   export default {
@@ -76,6 +77,7 @@
       FileField,
       TreeselectField,
       ValidationObserver,
+      BirthdayField,
     },
     mixins: [FormActionMixin],
     props: {

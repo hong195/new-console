@@ -22,8 +22,8 @@
     </v-btn>
 
     <v-toolbar-title
-      class="hidden-sm-and-down"
-      v-text="$route.name"
+      class="hidden-sm-and-down ml-3"
+      v-text="$t($route.name)"
     />
 
     <v-spacer />
