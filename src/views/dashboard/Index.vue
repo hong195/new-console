@@ -7,22 +7,24 @@
     <dashboard-core-view />
 
     <dashboard-core-settings v-model="expandOnHover" />
+    <!-- <base-material-snackbar /> -->
+    <base-snackbar-message />
   </v-app>
 </template>
 
 <script>
   export default {
-    name: 'DashboardIndex',
+    name: "DashboardIndex",
 
     components: {
-      DashboardCoreAppBar: () => import('./components/core/AppBar'),
-      DashboardCoreDrawer: () => import('./components/core/Drawer'),
-      DashboardCoreSettings: () => import('./components/core/Settings'),
-      DashboardCoreView: () => import('./components/core/View'),
+      DashboardCoreAppBar: () => import("./components/core/AppBar"),
+      DashboardCoreDrawer: () => import("./components/core/Drawer"),
+      DashboardCoreSettings: () => import("./components/core/Settings"),
+      DashboardCoreView: () => import("./components/core/View"),
     },
 
     data: () => ({
       expandOnHover: false,
     }),
-  }
+  };
 </script>

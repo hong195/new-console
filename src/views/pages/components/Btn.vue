@@ -1,15 +1,15 @@
 <script>
-  import { VBtn } from 'vuetify/lib'
+  import { VBtn } from "vuetify/lib";
 
   export default {
-    name: 'PagesBtn',
+    name: "PagesBtn",
 
     extends: VBtn,
 
     props: {
       color: {
         type: String,
-        default: 'success',
+        default: "success",
       },
       depressed: {
         type: Boolean,
@@ -24,5 +24,5 @@
         default: true,
       },
     },
-  }
+  };
 </script>

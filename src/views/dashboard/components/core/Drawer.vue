@@ -54,10 +54,10 @@
 
 <script>
   // Utilities
-  import { mapState } from 'vuex'
+  import { mapState, mapGetters } from "vuex";
 
   export default {
-    name: 'DashboardCoreDrawer',
+    name: "DashboardCoreDrawer",
 
     props: {
       expandOnHover: {
@@ -69,80 +69,100 @@
     data: () => ({
       items: [
         {
-          icon: 'mdi-view-dashboard',
-          title: 'mainPage',
-          to: '/',
+          icon: "mdi-view-dashboard",
+          title: "mainPage",
+          to: "/",
         },
         {
-          to: '/pharmacy',
-          icon: 'mdi-image',
-          title: 'pharmacy',
+          to: "/pharmacy",
+          icon: "mdi-image",
+          title: "pharmacy",
         },
         {
-          to: '/staff',
-          icon: 'mdi-view-comfy',
-          title: 'staff',
+          to: "/staff",
+          icon: "mdi-view-comfy",
+          title: "staff",
+        },
+      ],
+      itemsAdmin: [
+        {
+          icon: "mdi-view-dashboard",
+          title: "mainPage",
+          to: "/",
         },
         {
-          to: '/add-member',
-          icon: 'mdi-clipboard-outline',
-          title: 'addMember',
+          to: "/pharmacy",
+          icon: "mdi-image",
+          title: "pharmacy",
+        },
+        {
+          to: "/staff",
+          icon: "mdi-view-comfy",
+          title: "staff",
+        },
+        {
+          to: "/add-member",
+          icon: "mdi-clipboard-outline",
+          title: "addMember",
         },
       ],
     }),
 
     computed: {
-      ...mapState(['barColor', 'barImage']),
+      ...mapState(["barColor", "barImage"]),
+      ...mapGetters(["user"]),
       drawer: {
-        get () {
-          return this.$store.state.drawer
+        get() {
+          return this.$store.state.drawer;
         },
-        set (val) {
-          this.$store.commit('SET_DRAWER', val)
+        set(val) {
+          this.$store.commit("SET_DRAWER", val);
         },
       },
-      computedItems () {
-        return this.items.map(this.mapItem)
+      computedItems() {
+        if (this.$store.getters.user.role == "admin")
+          return this.itemsAdmin.map(this.mapItem);
+        else return this.items.map(this.mapItem);
       },
-      profile () {
+      profile() {
         return {
           avatar: true,
-          group: '',
-          title: this.$t('avatar'),
+          group: "",
+          title: this.user.name,
           children: [
             {
-              href: '',
-              title: this.$t('my-profile'),
+              href: "",
+              title: this.$t("my-profile"),
             },
             {
-              to: '',
-              title: this.$t('edit-profile'),
+              to: "",
+              title: this.$t("edit-profile"),
             },
             {
-              to: '',
-              title: this.$t('settings'),
+              to: "",
+              title: this.$t("settings"),
             },
           ],
-        }
+        };
       },
     },
 
     watch: {
-      '$vuetify.breakpoint.smAndDown' (val) {
-        this.$emit('update:expandOnHover', !val)
+      "$vuetify.breakpoint.smAndDown"(val) {
+        this.$emit("update:expandOnHover", !val);
       },
     },
 
     methods: {
-      mapItem (item) {
+      mapItem(item) {
         return {
           ...item,
           children: item.children ? item.children.map(this.mapItem) : undefined,
           title: this.$t(item.title),
-        }
+        };
       },
     },
-  }
+  };
 </script>
 
 <style lang="sass">

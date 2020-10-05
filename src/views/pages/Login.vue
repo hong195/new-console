@@ -1,9 +1,5 @@
 <template>
-  <v-container
-    id="login"
-    class="fill-height"
-    tag="section"
-  >
+  <v-container id="login" class="fill-height" tag="section">
     <v-row justify="center">
       <v-slide-y-transition appear>
         <base-material-card
@@ -15,11 +11,9 @@
         >
           <template v-slot:heading>
             <div class="text-center">
-              <h1 class="display-2 font-weight-bold mb-2">
-                Login
-              </h1>
+              <h1 class="display-2 font-weight-bold mb-2">Login</h1>
 
-              <v-btn
+              <!-- <v-btn
                 v-for="(social, i) in socials"
                 :key="i"
                 :href="social.href"
@@ -28,46 +22,47 @@
                 rel="noopener"
                 target="_blank"
               >
-                <v-icon
-                  v-text="social.icon"
-                />
-              </v-btn>
+                <v-icon v-text="social.icon" />
+              </v-btn> -->
             </div>
           </template>
 
           <v-card-text class="text-center">
-            <div class="text-center grey--text body-1 font-weight-light">
+            <!-- <div class="text-center grey--text body-1 font-weight-light">
               Or Be Classical
-            </div>
+            </div> -->
 
             <v-text-field
               color="secondary"
-              label="First Name..."
+              label="Username"
+              v-model="username"
               prepend-icon="mdi-face"
               class="mt-10"
             />
 
-            <v-text-field
+            <!-- <v-text-field
               color="secondary"
               label="Email..."
               prepend-icon="mdi-email"
-            />
+            /> -->
 
             <v-text-field
               class="mb-8"
               color="secondary"
               label="Password..."
+              v-model="password"
               prepend-icon="mdi-lock-outline"
             />
 
-            <pages-btn
+            <v-btn
               large
               color=""
               depressed
               class="v-btn--text success--text"
+              @click="login(username, password)"
             >
               Let's Go
-            </pages-btn>
+            </v-btn>
           </v-card-text>
         </base-material-card>
       </v-slide-y-transition>
@@ -76,31 +71,36 @@
 </template>
 
 <script>
+  import { mapActions } from "vuex";
   export default {
-    name: 'PagesLogin',
+    name: "PagesLogin",
 
     components: {
-      PagesBtn: () => import('./components/Btn'),
+      PagesBtn: () => import("./components/Btn"),
     },
 
     data: () => ({
+      username: "",
+      password: "",
       socials: [
         {
-          href: '#',
-          icon: 'mdi-facebook-box',
+          href: "#",
+          icon: "mdi-facebook-box",
         },
         {
-          href: '#',
-          icon: 'mdi-twitter',
+          href: "#",
+          icon: "mdi-twitter",
         },
         {
-          href: '#',
-          icon: 'mdi-github-box',
+          href: "#",
+          icon: "mdi-github-box",
         },
       ],
     }),
-  }
+    methods: {
+      ...mapActions(["login"]),
+    },
+  };
 </script>
 <style lang="scss">
-
 </style>

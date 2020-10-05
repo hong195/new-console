@@ -1,8 +1,26 @@
 import Vue from 'vue'
 import Router from 'vue-router'
+import store from './store'
 
 Vue.use(Router)
-
+function guardMyroute(to, from, next) {
+  var isAuthenticated = false
+  let user = store.getters.user;
+  if (user && user.id) {
+    if (to.meta.type.includes(user.role)
+      && to.meta.permissions.every(permission =>
+        user.permissions.includes(permission)
+      )) {
+      isAuthenticated = true
+    }
+  }
+  if (isAuthenticated) {
+    next()
+  } else {
+    store.commit("errorMessage", "You don't have permission")
+    next({ name: 'Login' })
+  }
+}
 export default new Router({
   mode: 'hash',
   base: process.env.BASE_URL,
@@ -42,16 +60,22 @@ export default new Router({
           name: 'Dashboard',
           path: '',
           component: () => import('@/views/dashboard/Dashboard'),
+          beforeEnter: guardMyroute,
+          meta: { type: ['admin', "user"], permissions: ["view"] }
         },
         {
           name: 'pharmacy',
           path: 'pharmacy',
           component: () => import('@/views/dashboard/pages/Pharmacy'),
+          beforeEnter: guardMyroute,
+          meta: { type: 'user', permissions: ["view", "edit"] }
         },
         {
           name: 'addMember',
           path: 'add-member',
           component: () => import('@/views/dashboard/pages/AddMember'),
+          beforeEnter: guardMyroute,
+          meta: { type: 'admin', permissions: ["view", "create"] }
         },
         // Pages
         {
