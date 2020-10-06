@@ -1,27 +1,13 @@
 import Vue from 'vue'
 import Router from 'vue-router'
 import store from './store'
-
+import auth from './middleware/auth'
+// import hasPermission from './middleware/hasPermission'
+import middlewarePipeline from './middleware/middlewarePipeline'
+import isAdmin from './middleware/isAdmin'
+import isSubscriber from './middleware/isSubscriber'
 Vue.use(Router)
-function guardMyroute(to, from, next) {
-  var isAuthenticated = false
-  let user = store.getters.user;
-  if (user && user.id) {
-    if (to.meta.type.includes(user.role)
-      && to.meta.permissions.every(permission =>
-        user.permissions.includes(permission)
-      )) {
-      isAuthenticated = true
-    }
-  }
-  if (isAuthenticated) {
-    next()
-  } else {
-    store.commit("errorMessage", "You don't have permission")
-    next({ name: 'Login' })
-  }
-}
-export default new Router({
+const router = new Router({
   mode: 'hash',
   base: process.env.BASE_URL,
   routes: [
@@ -35,7 +21,7 @@ export default new Router({
           component: () => import('@/views/pages/Lock'),
         },
         {
-          name: 'Login',
+          name: 'login',
           path: 'login',
           component: () => import('@/views/pages/Login'),
         },
@@ -54,34 +40,53 @@ export default new Router({
     {
       path: '/',
       component: () => import('@/views/dashboard/Index'),
+      name: 'App',
+      meta: {
+        middleware: [
+          auth
+        ]
+      },
       children: [
-        // Dashboard
         {
           name: 'Dashboard',
-          path: '',
+          path: 'main',
           component: () => import('@/views/dashboard/Dashboard'),
-          beforeEnter: guardMyroute,
-          meta: { type: ['admin', "user"], permissions: ["view"] }
         },
         {
           name: 'pharmacy',
           path: 'pharmacy',
           component: () => import('@/views/dashboard/pages/Pharmacy'),
-          beforeEnter: guardMyroute,
-          meta: { type: 'user', permissions: ["view", "edit"] }
+          meta: {
+            middleware: [
+              isAdmin
+            ]
+          },
+        },
+        {
+          name: 'staff',
+          path: 'staff',
+          component: () => import('@/views/dashboard/pages/Staff'),
+          meta: {
+            middleware: [
+              isAdmin
+            ]
+          },
         },
         {
           name: 'addMember',
           path: 'add-member',
           component: () => import('@/views/dashboard/pages/AddMember'),
-          beforeEnter: guardMyroute,
-          meta: { type: 'admin', permissions: ["view", "create"] }
         },
         // Pages
         {
           name: 'RTL',
           path: 'pages/rtl',
           component: () => import('@/views/dashboard/pages/Rtl'),
+          meta: {
+            middleware: [
+              isSubscriber
+            ]
+          },
         },
         {
           name: 'User Profile',
@@ -203,3 +208,21 @@ export default new Router({
     },
   ],
 })
+
+router.beforeEach((to, from, next) => {
+  if (!to.meta.middleware) {
+    return next()
+  }
+  const middleware = to.meta.middleware
+  const context = {
+    to,
+    from,
+    next,
+    store
+  }
+  return middleware[0]({
+    ...context,
+    next: middlewarePipeline(context, middleware, 1)
+  })
+})
+export default router

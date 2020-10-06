@@ -1,13 +1,8 @@
 <template>
-  <v-footer
-    id="dashboard-core-footer"
-  >
+  <v-footer id="dashboard-core-footer">
     <v-container>
-      <v-row
-        align="center"
-        no-gutters
-      >
-        <v-col
+      <v-row align="center" no-gutters>
+        <!-- <v-col
           v-for="(link, i) in links"
           :key="i"
           class="text-center mb-sm-0 mb-5"
@@ -20,20 +15,15 @@
             target="_blank"
             v-text="link.text"
           />
-        </v-col>
+        </v-col> -->
 
         <v-spacer class="hidden-sm-and-down" />
 
-        <v-col
-          cols="12"
-          md="auto"
-        >
+        <v-col cols="12" md="auto">
           <div class="body-1 font-weight-light pt-6 pt-md-0 text-center">
-            &copy; 2019, made with
-            <v-icon size="18">
-              mdi-heart
-            </v-icon>
-            by <a href="https://www.creative-tim.com">Creative Tim</a> for a better web.
+            &copy; 2020,
+            <v-icon size="18"> mdi-heart </v-icon>
+            <a href="https://www.creative-tim.com">OXYmed</a>
           </div>
         </v-col>
       </v-row>
@@ -43,37 +33,37 @@
 
 <script>
   export default {
-    name: 'DashboardCoreFooter',
+    name: "DashboardCoreFooter",
 
     data: () => ({
       links: [
         {
-          href: '#',
-          text: 'Creative Tim',
+          href: "#",
+          text: "Creative Tim",
         },
         {
-          href: '#',
-          text: 'About Us',
+          href: "#",
+          text: "About Us",
         },
         {
-          href: '#',
-          text: 'Blog',
+          href: "#",
+          text: "Blog",
         },
         {
-          href: '#',
-          text: 'Licenses',
+          href: "#",
+          text: "Licenses",
         },
       ],
     }),
-  }
+  };
 </script>
 
 <style lang="sass">
-  #dashboard-core-footer
-    a
-      color: #3c4858
-      font-size: .825rem
-      font-weight: 500
-      text-decoration: none
-      text-transform: uppercase
+#dashboard-core-footer
+  a
+    color: #3c4858
+    font-size: .825rem
+    font-weight: 500
+    text-decoration: none
+    text-transform: uppercase
 </style>

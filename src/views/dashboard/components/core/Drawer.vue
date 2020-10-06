@@ -71,7 +71,7 @@
         {
           icon: "mdi-view-dashboard",
           title: "mainPage",
-          to: "/",
+          to: "/main",
         },
         {
           to: "/pharmacy",
@@ -88,7 +88,7 @@
         {
           icon: "mdi-view-dashboard",
           title: "mainPage",
-          to: "/",
+          to: "/main",
         },
         {
           to: "/pharmacy",
@@ -96,14 +96,21 @@
           title: "pharmacy",
         },
         {
-          to: "/staff",
-          icon: "mdi-view-comfy",
+          icon: "mdi-account-multiple",
           title: "staff",
-        },
-        {
-          to: "/add-member",
-          icon: "mdi-clipboard-outline",
-          title: "addMember",
+          group: "",
+          children: [
+            {
+              to: "staff",
+              avatar: "mdi-view-comfy",
+              title: "staff",
+            },
+            {
+              to: "add-member",
+              avatar: "mdi-clipboard-outline",
+              title: "addMember",
+            },
+          ],
         },
       ],
     }),
@@ -120,9 +127,9 @@
         },
       },
       computedItems() {
-        if (this.$store.getters.user.role == "admin")
-          return this.itemsAdmin.map(this.mapItem);
-        else return this.items.map(this.mapItem);
+        return this.$store.getters.isAdmin
+          ? this.itemsAdmin.map(this.mapItem)
+          : this.items.map(this.mapItem);
       },
       profile() {
         return {

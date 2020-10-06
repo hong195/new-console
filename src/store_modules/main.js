@@ -3,9 +3,15 @@ import router from '@/router';
 export default {
   state: {
     user: {},
+    isAdmin: false,
+    isSubscriber: false,
+    hasPermission: false,
   },
   getters: {
     user: state => state.user,
+    isAdmin: state => state.user.role == 'admin',
+    isSubscriber: state => state.user.role == 'user',
+    hasPermission: state => type => state.user.permissions.includes(type),
   },
   mutations: {
     setUser(state, payload) {
@@ -14,11 +20,11 @@ export default {
   },
   actions: {
     login({ commit }, username, password) {
-      console.log(username)
+      localStorage.setItem("token", "fjkdhgiutrjgiuerbghjfbhje");
       let user = {
         id: 1,
         name: username,
-        role: "user",
+        role: "admin",
         permissions: ["view", "", "create", "delete"],
       };
       commit("setUser", user)
@@ -28,7 +34,8 @@ export default {
     logout({ commit }) {
       let user = {};
       commit("setUser", user)
-      router.push({ name: "Login" })
+      localStorage.setItem("token", "");
+      router.push({ name: "login" })
     }
   },
 }

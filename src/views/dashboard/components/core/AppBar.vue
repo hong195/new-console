@@ -21,7 +21,7 @@
       <v-icon v-else> mdi-dots-vertical </v-icon>
     </v-btn>
 
-    <v-toolbar-title class="hidden-sm-and-down ml-3" v-text="$route.name" />
+    <v-toolbar-title class="hidden-sm-and-down ml-3" v-text="$t($route.name)" />
 
     <v-spacer />
 
